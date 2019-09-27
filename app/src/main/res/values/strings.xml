@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Abulia</string>
+    <string name="new_list">New List</string>
+    <string name="saved_lists">Saved Lists</string>
+    <string name="choose_50_50">50/50</string>
+    <string name="title_activity_main2">Main2Activity</string>
+</resources>
