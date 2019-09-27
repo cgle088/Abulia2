@@ -1,6 +1,9 @@
 package com.example.abulia2;
 
 import android.view.View;
+import android.widget.EditText;
+
+import java.util.ArrayList;
 
 public interface MVPComponents {
 
@@ -12,6 +15,7 @@ public interface MVPComponents {
      * Called when a new list is being created
      */
     interface NewListPresenterContract{
+        NewListActivity getNewListView();
         void addOptionField();
         void choose();
         void saveListAs();
@@ -26,7 +30,9 @@ public interface MVPComponents {
     /**
      * For inserting new list into DB
      */
-    interface NewListModel{}
+    interface NewListModel{
+        boolean saveListAsTable(String listName, ArrayList<EditText> optionList);
+    }
 
 
     /**

@@ -1,11 +1,14 @@
 package com.example.abulia2;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -36,10 +39,15 @@ public class NewListPresenter implements MVPComponents.NewListPresenterContract 
     //The number of options to choose from will never be less than 2
     private int optionCount = 0;
     private int optionID = 0;
+    private String listName;
 
+    public NewListActivity getNewListView(){
+        return viewNewList;
+    }
 
     public NewListPresenter(NewListActivity view){
         viewNewList = view;
+        //newListView = view;
         modelNewList = new NewListModel(this);
         addOptionField();
         addOptionField();
@@ -47,16 +55,69 @@ public class NewListPresenter implements MVPComponents.NewListPresenterContract 
 
 
      public void choose(){
+         removeEmptyOptions();
          Random r = new Random();
-         int textId = r.nextInt(optionCount);
-         Log.d(getClass().getName(), "chooseOption() textView id = " + textId + " editTextCount = " + optionCount);
-         EditText chosenEditText = optionList.get(textId);
-         String chosenOption = chosenEditText.getText().toString();
-         showChoice(chosenOption);
+         String chosenOption = null;
+         do {
+             int textId = r.nextInt(optionCount);
+             Log.d(getClass().getName(), "chooseOption() textView id = " + textId + " editTextCount = " + optionCount);
+             chosenOption = optionList.get(textId).getText().toString();
+
+
+         }while(chosenOption.isEmpty());
+            showChoice(chosenOption);
     }
 
     public void saveListAs(){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(viewNewList);
+        alert.setTitle("Save List As...");
+        alert.setMessage("Enter new list name:");
 
+        final EditText input = new EditText(viewNewList);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                if(!input.getText().toString().isEmpty()) {
+                    listName = input.getText().toString();
+                    Log.d(getClass().getName(), "listName = " + listName);
+                    removeEmptyOptions();
+                    modelNewList.saveListAsTable(listName, optionList);
+                }else{
+                    alert("Enter valid name");
+                }
+
+            }
+        });
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Cancel
+            }
+        });
+        alert.show();
+
+
+    }
+
+    private void removeEmptyOptions(){
+        Log.d(getClass().getName(), "removeEmptyOptions() printing list before");
+        printList();
+        for(int i = 0; i < optionList.size(); i++){
+            Log.d(getClass().getName(), "allOptionsFilled() optionList.toString = " + optionList.get(i));
+            if(TextUtils.isEmpty(optionList.get(i).getText().toString()) ){
+                EditText removedET = optionList.get(i);
+                ((ViewGroup) removedET.getParent()).removeAllViews();
+                optionList.remove(i);
+                optionCount--;
+                i--;
+            }
+        }
+    }
+
+    private void printList(){
+        for(int i = 0; i < optionList.size(); i++){
+            Log.d(getClass().getName(), "Printing optionList: " + optionList.get(i));
+        }
     }
 
     public void addOptionField(){
@@ -67,8 +128,7 @@ public class NewListPresenter implements MVPComponents.NewListPresenterContract 
             LinearLayout optionContainer = new LinearLayout(viewNewList);
 
             et.setHint("Option");
-            et.setLayoutParams(new ViewGroup.LayoutParams(400, 100));
-
+            et.setLayoutParams(new ViewGroup.LayoutParams(600, 100));
             optionContainer.setId(optionID);
             optionID++;
             optionCount++;
@@ -78,6 +138,7 @@ public class NewListPresenter implements MVPComponents.NewListPresenterContract 
             optionContainer.addView(et);
             optionContainer.addView(createCancelButton(parentContainer, optionContainer, et));
             parentContainer.addView(optionContainer);
+            printList();
         }else{
             alert("Maximum Options Reached");
         }
@@ -96,7 +157,7 @@ public class NewListPresenter implements MVPComponents.NewListPresenterContract 
                     optionList.remove(option);
 
                     for (int i = 0; i < optionList.size(); i++) {
-                        Log.d(getClass().getName(), "createCancelButton() List[" + i + "] = " + optionList.get(i).getText().toString());
+                        Log.d(getClass().getName(), "createCancelButton() List[" + i + "] = " + optionList.get(i));
                     }
                     parent.removeView(container);
                     optionCount--;
@@ -134,12 +195,10 @@ public class NewListPresenter implements MVPComponents.NewListPresenterContract 
         choiceTV.setGravity(Gravity.CENTER_HORIZONTAL);
         ll.addView(choiceTV);
         choicePopUp.setContentView(ll);
-        choicePopUp.update();
-        choicePopUp.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        choicePopUp.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         choicePopUp.setOutsideTouchable(true);
         choicePopUp.setFocusable(true);
         choicePopUp.showAtLocation(ll, Gravity.CENTER_HORIZONTAL, 10, 10);
-
     }
 
 
