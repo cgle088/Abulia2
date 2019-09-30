@@ -12,19 +12,21 @@ public class ListContract {
     }
 
     public static class List implements BaseColumns {
-        public static final String TABLE_NAME = "Lists";
-        public static final String COLUMN = "Option";
+        private static final String TABLE_NAME = "Lists";
+        private static final String COLUMN = "Option";
         public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
                 " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," +COLUMN + " TEXT )";
-        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS" + TABLE_NAME;
+        private static final String DELETE_TABLE = "DROP TABLE IF EXISTS" + TABLE_NAME;
 
         public static class ListDbHelper extends SQLiteOpenHelper {
             public static final int DATABASE_VERSION = 1;
-            public static final String DATABASE_NAME = "List.db";
+            public static final String DATABASE_NAME = "Lists.db";
 
             public ListDbHelper(Context context) {
                 super(context, DATABASE_NAME, null, DATABASE_VERSION);
             }
+
+
 
             public boolean newTable(SQLiteDatabase db, String tableName){
                 try {
@@ -37,9 +39,14 @@ public class ListContract {
                 }
             }
 
-            public void onCreate(SQLiteDatabase db) {
-                db.execSQL(CREATE_TABLE);
+            public void getAllTables(SQLiteDatabase db){
+                db.execSQL("SELECT name FROM sqlite_master WHERE type='table'");
             }
+
+            public void onCreate(SQLiteDatabase db) {
+
+            }
+
             public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
                 db.execSQL(DELETE_TABLE);
                 onCreate(db);

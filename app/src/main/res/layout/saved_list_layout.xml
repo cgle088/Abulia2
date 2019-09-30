@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/saved_list_parent"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/list_name"
+        android:minWidth="100sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginRight="15dp"
+        android:textSize="17sp" />
+
+    <Button
+        android:id="@+id/delete_list_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        />
+    <Button
+        android:id="@+id/edit_list_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        />
+    <Button
+        android:id="@+id/choose_from_list_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose"
+        />
+
+
+</LinearLayout>

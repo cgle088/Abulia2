@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".NewListActivity"></activity>
+        <activity android:name=".SavedListsActivity"></activity>
     </application>
 
 </manifest>

@@ -17,8 +17,6 @@ public class NewListActivity extends AppCompatActivity implements MVPComponents.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_list_activity);
-//        toolbar = findViewById(R.id.new_list_app_bar);
-//        setSupportActionBar(toolbar);
         setupPresenter();
     }
     @Override
@@ -49,10 +47,6 @@ public class NewListActivity extends AppCompatActivity implements MVPComponents.
 
     void setupPresenter(){
         newListPresenter = new NewListPresenter(this);
-    }
-
-    void newTV(){
-        TextView newTV = new TextView(this);
     }
 
 }

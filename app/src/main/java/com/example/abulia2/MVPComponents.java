@@ -25,7 +25,10 @@ public interface MVPComponents {
     /**
      * Called when user wants to edit/choose from old Lists
      */
-    interface SavedListsPresenterContract{}
+    interface SavedListsPresenterContract{
+        SavedListsActivity getSavedListsView();
+        void dropListTable(String listName);
+    }
 
     /**
      * For inserting new list into DB
@@ -38,5 +41,7 @@ public interface MVPComponents {
     /**
      * For getting/updating saved Lists
      */
-    interface SavedListsModel{}
+    interface SavedListsModel{
+        ArrayList<String> getTablesList();
+    }
 }
