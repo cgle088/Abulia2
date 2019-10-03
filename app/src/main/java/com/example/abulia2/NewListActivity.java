@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 public class NewListActivity extends AppCompatActivity implements MVPComponents.ViewContract {
 
@@ -21,7 +19,7 @@ public class NewListActivity extends AppCompatActivity implements MVPComponents.
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.new_list_toolbar, menu);
+        getMenuInflater().inflate(R.menu.list_toolbar, menu);
 //        return super.onCreateOptionsMenu(menu);
         return true;
     }

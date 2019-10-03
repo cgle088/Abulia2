@@ -5,24 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-
-
-    <!--<Button-->
-        <!--android:id="@+id/newOptionButton"-->
-        <!--android:layout_below="@+id/tool_bar"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Add Option"-->
-        <!--/>-->
-    <!--<Button-->
-        <!--android:id="@+id/chooseButton"-->
-        <!--android:layout_below="@+id/tool_bar"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Choose"-->
-        <!--/>-->
-
     <ScrollView
         android:id="@+id/ScrollView"
         android:layout_width="match_parent"

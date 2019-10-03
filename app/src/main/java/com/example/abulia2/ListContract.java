@@ -1,10 +1,12 @@
 package com.example.abulia2;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 public class ListContract {
     //Constructor is private to prevent "accidentally instantiating the contract class"
@@ -12,11 +14,12 @@ public class ListContract {
     }
 
     public static class List implements BaseColumns {
+        private static final String TAG = "ListContract";
         private static final String TABLE_NAME = "Lists";
         private static final String COLUMN = "Option";
         public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
                 " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," +COLUMN + " TEXT )";
-        private static final String DELETE_TABLE = "DROP TABLE IF EXISTS" + TABLE_NAME;
+        private static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
         public static class ListDbHelper extends SQLiteOpenHelper {
             public static final int DATABASE_VERSION = 1;
@@ -24,6 +27,10 @@ public class ListContract {
 
             public ListDbHelper(Context context) {
                 super(context, DATABASE_NAME, null, DATABASE_VERSION);
+            }
+
+            public void dropTable(SQLiteDatabase db, String tableName){
+                db.execSQL("DROP TABLE " + tableName + ";");
             }
 
 
@@ -39,8 +46,14 @@ public class ListContract {
                 }
             }
 
-            public void getAllTables(SQLiteDatabase db){
-                db.execSQL("SELECT name FROM sqlite_master WHERE type='table'");
+            public Cursor getTable(SQLiteDatabase db, String listName){
+                Log.d(TAG,"getTable: called, getting " + listName);
+                return db.rawQuery("SELECT * FROM " + listName + ";", null);
+            }
+
+            public Cursor getAllTables(SQLiteDatabase db){
+                return db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' " +
+                        "AND name != 'sqlite_sequence' AND name != 'android_metadata';", null);
             }
 
             public void onCreate(SQLiteDatabase db) {

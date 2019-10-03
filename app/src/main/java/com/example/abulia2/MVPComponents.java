@@ -26,8 +26,18 @@ public interface MVPComponents {
      * Called when user wants to edit/choose from old Lists
      */
     interface SavedListsPresenterContract{
-        SavedListsActivity getSavedListsView();
+        SavedListsActivity getView();
         void dropListTable(String listName);
+        void editList(String listName);
+        void chooseFromList(String listName);
+    }
+
+    /**
+     * For editing lists that have been saved
+     */
+    interface EditListPresenter{
+        EditListActivity getView();
+        void removeOption(String option);
     }
 
     /**
@@ -43,5 +53,14 @@ public interface MVPComponents {
      */
     interface SavedListsModel{
         ArrayList<String> getTablesList();
+        void dropTable(String tableName);
+    }
+
+    /**
+     * For editing lists that have been saved
+     */
+    interface EditListsModel{
+//        ArrayList<String> getList(String listName);
+
     }
 }

@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class rAdapter extends RecyclerView.Adapter<rAdapter.viewHolder> {
-    private static final String TAG = "rAdapter";
+public class SavedListsAdapter extends RecyclerView.Adapter<SavedListsAdapter.viewHolder> {
+    private static final String TAG = "SavedListsAdapter";
     private ArrayList<String> dataSet;
     private Context mContext;
     private static SavedListsPresenter presenter;
@@ -31,17 +31,32 @@ public class rAdapter extends RecyclerView.Adapter<rAdapter.viewHolder> {
             Log.d(TAG, "viewHolder created");
             tv = savedListView.findViewById(R.id.list_name);
             cancelButton = savedListView.findViewById(R.id.delete_list_button);
+            editButton = savedListView.findViewById(R.id.edit_list_button);
+            chooseButton = savedListView.findViewById(R.id.choose_from_list_button);
             cancelButton.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v){
                     presenter.dropListTable(tv.getText().toString());
+                }
+            });
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    presenter.editList(tv.getText().toString());
+                }
+            });
+            chooseButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    presenter.chooseFromList(tv.getText().toString());
                 }
             });
             parentLayout = savedListView.findViewById(R.id.saved_list_parent);
         }
     }
 
-    public rAdapter(ArrayList<String> myDataSet, Context context, SavedListsPresenter p){
-        Log.d(TAG, "rAdapter created");
+
+    public SavedListsAdapter(ArrayList<String> myDataSet, Context context, SavedListsPresenter p){
+        Log.d(TAG, "SavedListsAdapter created");
         dataSet = myDataSet;
         mContext = context;
         presenter = p;
@@ -49,9 +64,11 @@ public class rAdapter extends RecyclerView.Adapter<rAdapter.viewHolder> {
     @Override
     public viewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         Log.d(TAG, "onCreateViewHolder: called");
-        View view = LayoutInflater.from(mContext).inflate(R.layout.saved_list_layout, parent, false);
+        View view = LayoutInflater.from(mContext)
+                .inflate(R.layout.saved_list_layout, parent, false);
         return new viewHolder(view);
     }
+
     @Override
     public void onBindViewHolder(viewHolder holder, int pos){
         Log.d(TAG, "onBindViewHolder: called, adding " + dataSet.get(pos));
