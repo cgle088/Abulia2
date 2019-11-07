@@ -27,6 +27,7 @@ public class ListContract {
 
             public ListDbHelper(Context context) {
                 super(context, DATABASE_NAME, null, DATABASE_VERSION);
+                //this.getReadableDatabase();
             }
 
             public void dropTable(SQLiteDatabase db, String tableName){
@@ -54,6 +55,12 @@ public class ListContract {
             public Cursor getAllTables(SQLiteDatabase db){
                 return db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' " +
                         "AND name != 'sqlite_sequence' AND name != 'android_metadata';", null);
+            }
+
+            public void dropTableIfExists(SQLiteDatabase db, String tableName){
+                Log.d(getClass().getName(), "dropTableIfExists: called. Removing list "+tableName);
+                db.execSQL("DROP TABLE IF EXISTS "+tableName+";");
+
             }
 
             public void onCreate(SQLiteDatabase db) {

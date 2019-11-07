@@ -20,12 +20,9 @@ public class SavedListsModel implements MVPComponents.SavedListsModel {
     }
 
     public ArrayList<String> getTablesList(){
+        Log.d(TAG, "getTablesList: called, db is null");
         db = dbHelper.getReadableDatabase();
         Log.d(TAG, "getTablesList: called");
-        //String selectionArgs[] = { "table", "android_metadata", "sqlite_sequence"};
-
-        //Cursor cursor = db.rawQuery("SELECT name FROM sqlite_master WHERE type" + "= ?" + " " +
-        //        "AND name " + "!= ?" + "AND name " + "!= ?" + " ;", selectionArgs);
         Cursor cursor = dbHelper.getAllTables(db);
         if(cursor != null){
             if(cursor.moveToFirst()) {
@@ -36,6 +33,8 @@ public class SavedListsModel implements MVPComponents.SavedListsModel {
             }
         }
         cursor.close();
+//        db.close();
+////        dbHelper.close();
         return tablesList;
     }
 

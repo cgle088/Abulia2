@@ -21,7 +21,8 @@ public class NewListModel implements MVPComponents.NewListModel {
             Log.d(getClass().getName(), "dbHelper.newTables success");
         }
         for (int i = 0; i < optionList.size(); i++) {
-            Log.d(getClass().getName(), "saveList() putting " + optionList.get(i));
+            Log.d(getClass().getName(), "saveList() putting "
+                    + optionList.get(i).getText().toString());
             values.put("Option", optionList.get(i).getText().toString());
             long newRowId = db.insert(listName, null, values);
         }

@@ -7,10 +7,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -102,6 +104,7 @@ public class NewListPresenter implements MVPComponents.NewListPresenterContract 
     public void addOptionField(){
         if(optionCount < 10) {
             EditText et = new EditText(viewNewList);
+
             LinearLayout parentContainer = viewNewList.findViewById(R.id.optionLayout);
             LinearLayout optionContainer = new LinearLayout(viewNewList);
 

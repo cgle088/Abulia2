@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public class NewListActivity extends AppCompatActivity implements MVPComponents.ViewContract {
 
     private MVPComponents.NewListPresenterContract newListPresenter;
-    private androidx.appcompat.widget.Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
